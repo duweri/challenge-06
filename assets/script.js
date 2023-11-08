@@ -11,21 +11,23 @@
 var APIKey = "1904041cee75c3e94b83f0b1f917e11c";
 var cityInput = document.querySelector(".city-input");
 var searchButton = document.querySelector(".submit");
-var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+cityInput+"&appid="+APIKey+"&units=metric";
+
 var getCityData = function () {
     var cityName = cityInput.value.trim(); // Gets user entered city name and trim method removes whitespace from both sides of a string.
     if (!cityName) return; //return if cityName is empty
     console.log(cityName);
-}
 
-fetch(queryURL)
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+cityInput.value.trim()+"&appid="+APIKey+"&units=metric";
+
+return fetch(queryURL)
 .then(function (response) {
     return response.json();
 })
 .then(function (data) {
     console.log(data);
+    return data;
 })
-
+}
 
 
 searchButton.addEventListener("click", getCityData);
