@@ -47,7 +47,7 @@
   body {
     font: 1rem/1.3 "Roboto", sans-serif;
     background: var(--bg_main);
-    color: var(--text_dark);
+    color: var(--text_light);
     padding: 70px;
   }
   
@@ -119,7 +119,7 @@
     margin: 70px 0 20px;
   }
   
-  .ajax-section .cities {
+  /* .ajax-section .cities {
     display: grid;
     grid-gap: 32px 20px;
     grid-template-columns: repeat(4, 1fr);
@@ -131,7 +131,7 @@
     border-radius: 20px;
     background: var(--text_light);
     color: var(--text_med);
-  }
+  } */
   
   .ajax-section .city::after {
     content: '';

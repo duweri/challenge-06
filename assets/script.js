@@ -17,17 +17,40 @@ var getCityData = function () {
     if (!cityName) return; //return if cityName is empty
     console.log(cityName);
 
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+cityInput.value.trim()+"&appid="+APIKey+"&units=metric";
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityInput.value.trim() + "&appid=" + APIKey + "&units=metric";
 
-return fetch(queryURL)
-.then(function (response) {
-    return response.json();
-})
-.then(function (data) {
-    console.log(data);
-    return data;
-})
+    fetch(queryURL)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+
+            displayWeather(data)
+            getWeatherDetails(data.coord.lat, data.coord.lon)
+        })
 }
-
+//localStorage.setItem("cityData", JSON.stringify(data)); // want data to be stored in local storage
+var displayWeather = function (weatherObject) {
+    console.log(weatherObject)
+    var { main, weather, name, wind, coord } = weatherObject
+    var title = $("<h3>").text(name)
+    var tempEl = $("<h4>").text(main.temp)
+    var icon = $("<img>").attr("src", `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`)
+    $("#current-weather").append(title.append(icon), tempEl)
+    getWeatherDetails(coord.lat, coord.lon)
+}
+var getWeatherDetails = function (lat, lon) {
+    var forecastApi = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey; // need lattitude and longitude to be entered into URL from console.log(data)
+    fetch(forecastApi).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data)
+        for (var i = 0; i < data.list.length; i++) {
+            console.log(data.list[i])
+            var targetTime = data.list[i].dt_txt.split(" ")[1]
+            console.log(targetTime) // make if statment to take 40 cards and turn into 5
+        }
+    })
+}
 
 searchButton.addEventListener("click", getCityData);
